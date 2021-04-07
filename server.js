@@ -20,6 +20,7 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
   });
 
 // * Middleware
+app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
@@ -90,6 +91,6 @@ app.delete("/deleteTodo", (req, res) => {
 });
 
 //* Server
-app.listen(process.env.PORT || PORT, () => {
+app.listen(app.get("port"), () => {
   console.log(`Running server on port ${PORT}`);
 });

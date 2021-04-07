@@ -28,11 +28,15 @@ app.use(express.json());
 
 //*Routes
 app.get("/", async (req, res) => {
-  const todoItems = await db.collection("todos").find().toArray();
-  const itemsLeft = await db
-    .collection("todos")
-    .countDocuments({ completed: false });
-  res.render("index.ejs", { zebra: todoItems, left: itemsLeft });
+  try {
+    const todoItems = await db.collection("todos").find().toArray();
+    const itemsLeft = await db
+      .collection("todos")
+      .countDocuments({ completed: false });
+    res.render("index.ejs", { zebra: todoItems, left: itemsLeft });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.post("/createTodo", (req, res) => {
